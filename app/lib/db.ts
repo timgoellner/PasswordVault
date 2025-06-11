@@ -1,12 +1,22 @@
-"use server"
+import { PrismaClient } from '../generated/prisma'
+import { withAccelerate } from '@prisma/extension-accelerate'
 
-const pg = await import('pg').then(mod => mod.default ?? mod)
+export type Password = {
+  id: number,
+  location1: string,
+  location2: string | null,
+  location3: string | null,
+  username: string | null,
+  email: string | null,
+  password: string,
+}
 
-export const connectionPool = new pg.Pool({
-  connectionString: process.env.POSTGRES_URL,
-  user: process.env.POSTGRES_USER,
-  host: process.env.POSTGRES_HOST,
-  database: process.env.POSTGRES_DATABASE,
-  password: process.env.POSTGRES_PASSWORD,
-  port: 5432,
-});
+const globalForPrisma = global as unknown as { 
+  prisma: PrismaClient
+}
+
+const db = globalForPrisma.prisma || new PrismaClient().$extends(withAccelerate())
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db
+
+export default db
