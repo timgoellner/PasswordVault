@@ -2,16 +2,20 @@
 
 import { useState } from "react";
 import { Authenticate } from "./ui/Authenticate";
+import { Passwords } from "./ui/Passwords";
 import { Password } from "./lib/db";
 import styles from "./page.module.css";
+import { getAll } from "./lib/data";
 
 export default function Page() {
-  const [data, setData] = useState([] as Password[])
+  const [loggedIn, setLoggedIn] = useState(false)
 
   return (
     <main className={styles.main}>
-      {data.length === 0 && <Authenticate setData={setData} />}
-      {data.length !== 0 && data.map(password => <p key={password.id.toString()}>{password.location1}</p>)}
+      {!loggedIn && <Authenticate setLoggedIn={setLoggedIn} />}
+      {loggedIn && (
+        <Passwords />
+      )}
     </main>
   )
 }
