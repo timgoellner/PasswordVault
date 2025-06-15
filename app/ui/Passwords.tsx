@@ -9,11 +9,12 @@ interface props {
 
 export function Passwords({ data, setData }: props) {
   async function handleRemove(password: Password, index: number) {
+    const removed = await remove(password.id)
+    if (removed == null) return
+
     const newData = [...data]
     newData.splice(index, 1)
     setData(newData)
-
-    await remove(password.id)
   }
 
   return (
