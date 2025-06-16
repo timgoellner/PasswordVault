@@ -1,0 +1,126 @@
+.authenticate_page {
+  display: grid;
+  height: 100dvh;
+  grid-template-columns: 80% 20%;
+}
+
+.side {
+  background-color: var(--yellow);
+  transition: transform .8s ease-in-out;
+  transform-origin: right;
+}
+
+.transition {
+  transform: scaleX(5);
+}
+
+.authentication {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10dvh;
+  gap: 3rem;
+}
+
+.authenticationForm {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 1rem;
+  width: 20rem;
+
+  span {
+    flex: 1 100%;
+
+    input {
+      width: 100%;
+      padding: .2rem .4rem;
+      border: 4px var(--blue) solid;
+      transition: all .3s ease-in;
+    }
+
+    input:focus {
+      box-shadow: 4px 4px var(--blue);
+      border-color: var(--lightblue);
+    }
+  }
+
+  button {
+    width: min-content;
+    margin-top: 1rem;
+    padding: .6rem 1.7rem;
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all .1s ease-out;
+  }
+
+  button:hover, button:focus-visible {
+    background-color: var(--darkblue);
+    box-shadow: 4px 4px var(--blue);
+  }
+}
+
+.error {
+  background-color: var(--orangered) !important;
+}
+
+.error:hover, .error:focus-visible {
+  background-color: var(--red) !important;
+  box-shadow: 4px 4px var(--orangered) !important;
+}
+
+.design {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: .7;
+  
+  > div {
+    position: absolute;
+  }
+
+  > div:nth-child(1) {
+    width: 60%;
+    height: 35%;
+    background-color: var(--lightblue);
+    transform: translate(-2rem, -2rem) rotate(-15deg);
+    box-shadow: 1rem 1rem var(--blue), 2rem 2rem var(--darkblue);
+  }
+
+  > div:nth-child(2) {
+    display: flex;
+    align-items: flex-end;
+    width: 150%;
+    height: 100%;
+
+    div {
+      width: 100%;
+      height: 20%;
+      background-color: var(--lightblue);
+      transform: translate(-10rem, 0) rotate(-5deg);
+      box-shadow: 1rem 1rem var(--blue), 2rem 2rem var(--darkblue);
+    }
+  }
+
+  > div:nth-child(3) {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    height: 150%;
+
+    div {
+      width: 15%;
+      height: 100%;
+      background-color: var(--lightblue);
+      transform: translate(-10rem, 8rem) rotate(5deg);
+      box-shadow: 1rem -1rem var(--blue), 2rem -2rem var(--darkblue);
+    }
+  }
+}

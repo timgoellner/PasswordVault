@@ -16,7 +16,7 @@ export default function Page() {
 
   const filtered = useMemo(() => {
     return data.filter((password) => (
-      (password.location1 + password.location2 + password.location3)
+      (password.location1 + ' ' + password.location2 + ' ' + password.location3)
         .toLowerCase()
         .includes(query.toLowerCase())
     ))
@@ -27,6 +27,7 @@ export default function Page() {
       { !loggedIn && <Authenticate setLoggedIn={setLoggedIn} setData={setData} /> }
       { loggedIn && !addActive &&
         <div>
+          <h1>Passwords</h1>
           <input type='text' placeholder='search...' value={query} onChange={(event) => setQuery(event.target.value)} />
           <Passwords data={filtered} setData={setData}/>
           <button onClick={() => setAddActive(true)}>add entry</button>

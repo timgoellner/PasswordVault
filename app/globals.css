@@ -1,18 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 :root {
-  --background: #171717;
-  --foreground: #ffffff;
+  --background: #E9D8A6;
+  --yellow: #EE9B00;
+  --orange: #CA6702;
+  --orangered: #BB3E03;
+  --lightred: #AE2012;
+  --red: #9B2226;
+  --lightblue: #94D2BD;
+  --blue: #0A9396;
+  --darkblue: #005F73;
+  --foreground: #001219;
 }
 
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Inter", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -23,7 +33,24 @@ body {
   margin: 0;
 }
 
+*:focus {
+  outline: none;
+}
+
 a {
   color: inherit;
   text-decoration: none;
+}
+
+h1 {
+  font-size: 3.5rem;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input {
+  font-family: inherit;
 }
