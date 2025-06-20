@@ -17,18 +17,20 @@ export function Authenticate({ setLoggedIn, setData }: props) {
     const password = formData.get('password')
     const token = formData.get('token')
 
+    
     if (!(await validatePassword(password as string) && await validateToken(token as string))) {
       setIsError(true);
       setTimeout(() => setIsError(false), 500)
 
       return
     }
+    
 
     setIsLoading(true)
     setTimeout(async () => {
       setData(await getAll())
       setLoggedIn(true)
-    }, 800)
+    }, 700)
   }
 
   return (

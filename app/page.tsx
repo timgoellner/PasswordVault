@@ -23,14 +23,19 @@ export default function Page() {
   }, [data, query])
 
   return (
-    <main className={styles.main}>
+    <main>
       { !loggedIn && <Authenticate setLoggedIn={setLoggedIn} setData={setData} /> }
       { loggedIn && !addActive &&
-        <div>
-          <h1>Passwords</h1>
-          <input type='text' placeholder='search...' value={query} onChange={(event) => setQuery(event.target.value)} />
-          <Passwords data={filtered} setData={setData}/>
-          <button onClick={() => setAddActive(true)}>add entry</button>
+        <div className={styles.passwords_page}>
+          <div className={styles.side}></div>
+          <div>
+            <h1>Passwords</h1>
+            <div>
+              <input type='text' placeholder='search...' value={query} onChange={(event) => setQuery(event.target.value)} />
+              <button onClick={() => setAddActive(true)}>add entry</button>
+            </div>
+            <Passwords data={filtered} setData={setData}/>
+          </div>
         </div>
       }
       { loggedIn && addActive && <AddEntry data={data} setData={setData} setAddActive={setAddActive} /> }

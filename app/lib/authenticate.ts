@@ -1,9 +1,10 @@
 "use server"
 
 import * as otpauth from "otpauth"
+import bcrypt from "bcrypt"
 
 export async function validatePassword(password: string) {
-  return password === process.env.PASSWORD
+  return await bcrypt.compare(password, process.env.PASSWORD as string)
 }
 
 export async function validateToken(token: string) {

@@ -1,23 +1,42 @@
-var otpauth = require('otpauth')
-var QRCode = require('qrcode')
+const otpauth = require('otpauth')
+const QRCode = require('qrcode')
+const bcrypt = require('bcrypt')
+const fs = require('fs')
+const readline = require('readline')
 
-var fs = require('fs')
-
-try {
-  const secret = new otpauth.Secret({ size: 20 })
-
-  let totp = new otpauth.TOTP({
-    issuer: "",
-    label: "Password Vault",
-    algorithm: "SHA1",
-    digits: 6,
-    secret: secret,
+async function main() {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
   })
-  
 
-  let otpauth_url = totp.toString()
-  QRCode.toDataURL(otpauth_url, function (err: string, url: string) {
-    let fileContent = `
+  const askQuestion = (query: string) => new Promise(resolve => rl.question(query, resolve))
+
+  try {
+    const passwordString = await askQuestion("Enter your authentication password: ")
+    rl.close()
+
+    const hashedPassword = await bcrypt.hash(passwordString, 10) as string
+
+    const secret = new otpauth.Secret({ size: 20 })
+
+    const totp = new otpauth.TOTP({
+      issuer: "",
+      label: "Password Vault",
+      algorithm: "SHA1",
+      digits: 6,
+      secret: secret,
+    })
+
+    const otpauth_url = totp.toString()
+
+    QRCode.toDataURL(otpauth_url, function (err: string, url: string) {
+      if (err) {
+        console.error("QR Code generation error:", err)
+        return
+      }
+
+      const fileContent = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,15 +44,23 @@ try {
   <title>2FA QR-Code</title>
 </head>
 <body>
-  <h2>Secret: ${secret.base32}</h2>
+  <h1>Paste into .env:</h1>
+  <h2>PASSWORD = '${hashedPassword.replaceAll('$', '\\$')}'</h2>
+  <h2>SECRET = '${secret.base32}'</h2>
+  <br>
+  <h1>Scan with Google Authenticator:</h1>
   <img src="${url}" />
 </body>
 </html>
 `
 
-    fs.writeFileSync('2fa_qrcode.html', fileContent, 'utf8')
-    console.log("2FA QR-Code and Secret can be viewed in 2fa_qrcode.html")
-  })
-} catch (error) {
-  console.log(error)
+      fs.writeFileSync('setup.html', fileContent, 'utf8')
+      console.log("2FA QR-Code, Secret, and Hashed Password saved in setup.html")
+    })
+
+  } catch (error) {
+    console.error("An error occurred:", error)
+  }
 }
+
+main()
