@@ -1,6 +1,6 @@
 .passwords_page {
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 16% 84%;
   height: 100dvh;
 }
 
@@ -8,11 +8,29 @@
   width: 100%;
   height: 100%;
   background-color: var(--yellow);
-  animation: .7s ease-in-out 0s 1 slideIn;
+  animation: .7s ease-in-out 0s 1 sideSlideIn;
   transform-origin: left;
+
+  div {
+    height: 100%;
+    width: 16dvw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.3rem;
+    font-size: 6rem;
+    font-weight: 600;
+    transform: translateX(-10dvw) rotate(-90deg);
+    animation: .35s forwards .75s 1 textSlideIn;
+  }
 }
 
-@keyframes slideIn {
-  0% { transform: scaleX(5); }
+@keyframes sideSlideIn {
+  0% { transform: scaleX(6.25); }
   100% { transform: scaleX(1); }
+}
+
+@keyframes textSlideIn {
+  0% { transform: translateX(-10dvw) rotate(-90deg); }
+  100% { transform: translateX(0) rotate(-90deg); }
 }

@@ -27,9 +27,20 @@ export default function Page() {
       { !loggedIn && <Authenticate setLoggedIn={setLoggedIn} setData={setData} /> }
       { loggedIn && !addActive &&
         <div className={styles.passwords_page}>
-          <div className={styles.side}></div>
+          <div className={styles.side}>
+            <div>
+              <p>P</p>
+              <p>a</p>
+              <p>s</p>
+              <p>s</p>
+              <p>w</p>
+              <p>o</p>
+              <p>r</p>
+              <p>d</p>
+              <p>s</p>
+            </div>
+          </div>
           <div>
-            <h1>Passwords</h1>
             <div>
               <input type='text' placeholder='search...' value={query} onChange={(event) => setQuery(event.target.value)} />
               <button onClick={() => setAddActive(true)}>add entry</button>
