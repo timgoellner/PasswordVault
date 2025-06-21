@@ -34,7 +34,7 @@ export function Authenticate({ setLoggedIn, setData }: props) {
   }
 
   return (
-    <div className={styles.authenticate_page}>
+    <div className={styles.authenticatePage}>
       <div className={styles.authentication}>
         <div className={styles.design}>
           <div></div>

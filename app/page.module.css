@@ -1,4 +1,4 @@
-.passwords_page {
+.passwordsPage {
   display: grid;
   grid-template-columns: 16% 84%;
   height: 100dvh;
@@ -7,6 +7,7 @@
 .side {
   width: 100%;
   height: 100%;
+  z-index: 1;
   background-color: var(--yellow);
   animation: .7s ease-in-out 0s 1 sideSlideIn;
   transform-origin: left;
@@ -18,10 +19,62 @@
     align-items: center;
     justify-content: center;
     gap: 1.3rem;
-    font-size: 6rem;
-    font-weight: 600;
-    transform: translateX(-10dvw) rotate(-90deg);
-    animation: .35s forwards .75s 1 textSlideIn;
+    font-size: 5.5rem;
+    font-weight: 500;
+    transform: translateX(-20dvw) rotate(-90deg);
+    animation: .35s forwards .7s 1 textSlideIn;
+  }
+}
+
+.passwords {
+  display: grid;
+  grid-template-rows: 20dvh 60dvh;
+  margin-right: 16dvw;
+
+  div:last-child {
+    margin-left: 5dvw;
+    margin-top: 5dvh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+}
+
+.controls {
+  display: flex;
+  gap: 5dvw;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 5dvh;
+
+  input {
+    width: 12dvw;
+    height: 2.5rem;
+    padding: .2rem .8rem;
+    border: 4px var(--blue) solid;
+    transition: all .3s ease-in;
+    font-size: 1rem;
+  }
+
+  input:focus {
+    box-shadow: 4px 4px var(--blue);
+    border-color: var(--lightblue);
+  }
+
+  button {
+    display: inline-block;
+    height: 2.5rem;
+    padding: .4rem 1.2rem;
+    background-color: var(--blue);
+    color: white;
+    border: 4px transparent solid;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all .1s ease-out;
+  }
+
+  button:hover, button:focus-visible {
+    background-color: var(--darkblue);
+    box-shadow: 4px 4px var(--blue);
   }
 }
 

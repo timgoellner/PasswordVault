@@ -26,7 +26,7 @@ export default function Page() {
     <main>
       { !loggedIn && <Authenticate setLoggedIn={setLoggedIn} setData={setData} /> }
       { loggedIn && !addActive &&
-        <div className={styles.passwords_page}>
+        <div className={styles.passwordsPage}>
           <div className={styles.side}>
             <div>
               <p>P</p>
@@ -40,12 +40,14 @@ export default function Page() {
               <p>s</p>
             </div>
           </div>
-          <div>
-            <div>
-              <input type='text' placeholder='search...' value={query} onChange={(event) => setQuery(event.target.value)} />
-              <button onClick={() => setAddActive(true)}>add entry</button>
+          <div className={styles.passwords}>
+            <div className={styles.controls}>
+              <input type='text' placeholder='Search' value={query} onChange={(event) => setQuery(event.target.value)} />
+              <button onClick={() => setAddActive(true)}>Add Entry</button>
             </div>
-            <Passwords data={filtered} setData={setData}/>
+            <div>
+              <Passwords data={filtered} setData={setData}/>
+            </div>
           </div>
         </div>
       }
