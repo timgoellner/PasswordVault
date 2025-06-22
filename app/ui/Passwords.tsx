@@ -20,6 +20,15 @@ export function Passwords({ data, setData }: props) {
 
   return (
     <table className={styles.passwordTable}>
+      <colgroup>
+        <col span={1} />
+        <col span={1} />
+        <col span={1} />
+        <col span={1} />
+        <col span={1} />
+        <col span={1} />
+        <col span={1} />
+      </colgroup>
       <thead>
         <tr className={styles.listItem}>
           <th>Location</th>
@@ -39,7 +48,12 @@ export function Passwords({ data, setData }: props) {
             <td>{password.location3}</td>
             <td>{password.username}</td>
             <td>{password.email}</td>
-            <td>{password.password}</td>
+            <td>
+              <label className={styles.hideLabel}>
+                <span>{password.password}</span>
+                <input type="checkbox"/>
+              </label>
+            </td>
             <td><button onClick={async () => await handleRemove(password, index)}>Remove</button></td>
           </tr>
         ))}

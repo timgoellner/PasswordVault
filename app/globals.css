@@ -10,7 +10,7 @@
   --lightblue: #94D2BD;
   --blue: #0A9396;
   --darkblue: #005F73;
-  --foreground: #001219;
+  --dark: #001219;
 }
 
 html,
@@ -20,7 +20,7 @@ body {
 }
 
 body {
-  color: var(--foreground);
+  color: var(--dark);
   background: var(--background);
   font-family: "Inter", sans-serif;
   -webkit-font-smoothing: antialiased;
