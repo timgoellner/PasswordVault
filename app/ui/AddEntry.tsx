@@ -1,35 +1,35 @@
-import { Password } from "@/generated/prisma"
-import { add } from "@/lib/data"
 import { Dispatch, SetStateAction, useState } from "react"
+import { add, get } from "@/lib/data"
+import { Entry, InitialEntry, InitialPassword, Password } from "@/lib/db"
+import { encrypt } from "@/lib/security"
 
 interface props {
-  data: Password[],
-  setData: Dispatch<SetStateAction<Password[]>>
+  setData: Dispatch<SetStateAction<Entry[]>>
   setAddActive: Dispatch<SetStateAction<boolean>>
+  password: string
 }
 
-export default function AddEntry({ data, setData, setAddActive }: props) {
+export default function AddEntry({ setData, setAddActive, password }: props) {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
 
   async function addEntry(formData: FormData) {
-    let entry: Record<string, string | null> = {}
+    let entry: Record<string, InitialPassword | string | null> = {}
 
-    formData.keys().forEach((key) => {
+    for (const key of formData.keys()) {
       const value = formData.get(key) as string
-      entry[key] = (value == '') ? null : value
-    })
+
+      if (key === 'password') entry['password'] = (value === '') ? null : await encrypt(value, password)
+      else entry[key] = (value === '') ? null : value
+    }
 
     if (entry.location1 === null || (entry.location2 === null && entry.location3 !== null)) setError('invalid location')
-    else if (entry.username == null && entry.email == null) setError('no username or email')
-    else if (entry.password == null) setError('no password')
+    else if (entry.username === null && entry.email === null) setError('no username or email')
+    else if (entry.password === null) setError('no password')
     else {
-      const password = await add(entry)
+      await add(entry as InitialEntry)
 
-      const newData = [...data]
-      newData.push(password)
-      setData(newData)
-
+      setData(await get())
       setAddActive(false)
     }
   }

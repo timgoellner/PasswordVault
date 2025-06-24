@@ -1,15 +1,16 @@
 import { Dispatch, SetStateAction, useState } from 'react'
-import { Password } from '@/lib/db'
+import { Entry } from '@/lib/db'
 import { validatePassword, validateToken } from '@/lib/authenticate'
-import { getAll } from '@/lib/data'
+import { get } from '@/lib/data'
 import styles from './Authenticate.module.css'
 
 interface props {
   setLoggedIn: Dispatch<SetStateAction<boolean>>
-  setData: Dispatch<SetStateAction<Password[]>>
+  setData: Dispatch<SetStateAction<Entry[]>>
+  setPassword: Dispatch<SetStateAction<string>>
 }
 
-export function Authenticate({ setLoggedIn, setData }: props) {
+export function Authenticate({ setLoggedIn, setData, setPassword }: props) {
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
 
@@ -18,7 +19,7 @@ export function Authenticate({ setLoggedIn, setData }: props) {
     const token = formData.get('token')
 
     
-    if (!(await validatePassword(password as string) && await validateToken(token as string))) {
+    if (!(await validateToken(token as string) && await validatePassword(password as string))) {
       setIsError(true);
       setTimeout(() => setIsError(false), 500)
 
@@ -28,7 +29,8 @@ export function Authenticate({ setLoggedIn, setData }: props) {
 
     setIsLoading(true)
     setTimeout(async () => {
-      setData(await getAll())
+      setPassword("12345678" as string)
+      setData(await get())
       setLoggedIn(true)
     }, 700)
   }

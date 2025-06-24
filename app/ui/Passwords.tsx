@@ -1,21 +1,40 @@
-import { Password } from "@/lib/db"
+import { Entry } from "@/lib/db"
 import { remove } from "@/lib/data"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import styles from "./Passwords.module.css"
+import { decrypt } from "@/lib/security"
 
 interface props {
-  data: Password[]
-  setData: Dispatch<SetStateAction<Password[]>>
+  data: Entry[]
+  setData: Dispatch<SetStateAction<Entry[]>>
+  password: string
 }
 
-export function Passwords({ data, setData }: props) {
-  async function handleRemove(password: Password, index: number) {
-    const removed = await remove(password.id)
-    if (removed == null) return
+export function Passwords({ data, setData, password }: props) {
+  const [decrypted, setDecrypted] = useState<Record<number, string>>({})
 
-    const newData = [...data]
-    newData.splice(index, 1)
-    setData(newData)
+  async function handleRemove(entry: Entry, index: number) {
+    const removed = await remove(entry.id)
+    if (!removed) return
+
+    setData(previous => {
+      const newData = [...previous]
+      newData.splice(index, 1)
+      return newData
+    })
+  }
+
+  async function handleCheckbox(entry: Entry) {
+    if (!(entry.id in decrypted)) {
+      const decrypted = await decrypt(entry.password, password)
+
+      setDecrypted(previous => {
+        return {
+          ...previous,
+          [entry.id]: decrypted
+        }
+      })
+    }
   }
 
   return (
@@ -41,20 +60,20 @@ export function Passwords({ data, setData }: props) {
         </tr>
       </thead>
       <tbody>
-        {data.map((password, index) => (
-          <tr className={styles.listItem} key={password.id}>
-            <td>{password.location1}</td>
-            <td>{password.location2}</td>
-            <td>{password.location3}</td>
-            <td>{password.username}</td>
-            <td>{password.email}</td>
+        {data.map((entry, index) => (
+          <tr className={styles.listItem} key={entry.id}>
+            <td>{entry.location1}</td>
+            <td>{entry.location2}</td>
+            <td>{entry.location3}</td>
+            <td>{entry.username}</td>
+            <td>{entry.email}</td>
             <td>
               <label className={styles.hideLabel}>
-                <span>{password.password}</span>
-                <input type="checkbox"/>
+                <span>{decrypted[entry.id] ?? '--------------------'}</span>
+                <input type="checkbox" onChange={async () => await handleCheckbox(entry)}/>
               </label>
             </td>
-            <td><button onClick={async () => await handleRemove(password, index)}>Remove</button></td>
+            <td><button onClick={async () => await handleRemove(entry, index)}>Remove</button></td>
           </tr>
         ))}
       </tbody>

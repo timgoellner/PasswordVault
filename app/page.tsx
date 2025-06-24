@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Authenticate } from "./ui/Authenticate";
 import { Passwords } from "./ui/Passwords";
-import { Password } from "./lib/db";
+import { Entry } from "./lib/db";
 import styles from "./page.module.css";
 import AddEntry from "./ui/AddEntry";
 
@@ -11,8 +11,10 @@ export default function Page() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [addActive, setAddActive] = useState(false)
 
-  const [data, setData] = useState([] as Password[])
+  const [data, setData] = useState([] as Entry[])
   const [query, setQuery] = useState('')
+
+  const [password, setPassword] = useState('')
 
   const filtered = useMemo(() => {
     return data.filter((password) => (
@@ -24,7 +26,7 @@ export default function Page() {
 
   return (
     <main>
-      { !loggedIn && <Authenticate setLoggedIn={setLoggedIn} setData={setData} /> }
+      { !loggedIn && <Authenticate setLoggedIn={setLoggedIn} setData={setData} setPassword={setPassword} /> }
       { loggedIn && !addActive &&
         <div className={styles.passwordsPage}>
           <div className={styles.side}>
@@ -46,12 +48,12 @@ export default function Page() {
               <button onClick={() => setAddActive(true)}>Add Entry</button>
             </div>
             <div>
-              <Passwords data={filtered} setData={setData}/>
+              <Passwords data={filtered} setData={setData} password={password}/>
             </div>
           </div>
         </div>
       }
-      { loggedIn && addActive && <AddEntry data={data} setData={setData} setAddActive={setAddActive} /> }
+      { loggedIn && addActive && <AddEntry setData={setData} setAddActive={setAddActive} password={password} /> }
     </main>
   )
 }

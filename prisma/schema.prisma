@@ -8,12 +8,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Entry {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  active     Boolean  @default(true)
+  location1  String
+  location2  String?
+  location3  String?
+  username   String?
+  email      String?
+  password   Password @relation(fields: [passwordId], references: [id])
+  passwordId Int      @unique
+}
+
 model Password {
-  id        Int     @id @default(autoincrement())
-  location1 String
-  location2 String?
-  location3 String?
-  username  String?
-  email     String?
-  password  String
+  id     Int     @id @default(autoincrement())
+  cipher String
+  iv     String
+  salt   String
+  entry  Entry?
 }

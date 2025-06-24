@@ -9,9 +9,6 @@
     "lint": "next lint",
     "setup": "npx ts-node app/lib/setup.ts"
   },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
-  },
   "dependencies": {
     "@prisma/client": "^6.9.0",
     "@prisma/extension-accelerate": "^2.0.1",
