@@ -6,7 +6,7 @@
 
 .side {
   background-color: var(--yellow);
-  transition: transform .7s ease-in-out;
+  transition: transform .5s cubic-bezier(0.55, 0.085, 0.68, 0.53);
   transform-origin: right;
 }
 

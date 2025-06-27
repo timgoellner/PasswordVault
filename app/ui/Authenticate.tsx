@@ -11,7 +11,7 @@ interface props {
 }
 
 export function Authenticate({ setLoggedIn, setData, setPassword }: props) {
-  const [isLoading, setIsLoading] = useState(false)
+  const [transition, setTransition] = useState(false)
   const [isError, setIsError] = useState(false)
 
   async function authenticate(formData: FormData) {
@@ -27,12 +27,12 @@ export function Authenticate({ setLoggedIn, setData, setPassword }: props) {
     }
     
 
-    setIsLoading(true)
+    setTransition(true)
     setTimeout(async () => {
       setPassword("12345678" as string)
       setData(await get())
       setLoggedIn(true)
-    }, 700)
+    }, 600)
   }
 
   return (
@@ -56,7 +56,7 @@ export function Authenticate({ setLoggedIn, setData, setPassword }: props) {
           <button type='submit' className={isError ? styles.error : ''}>Authenticate</button>
         </form>
       </div>
-      <div className={`${styles.side} ${isLoading ? styles.transition : ''}`}></div>
+      <div className={`${styles.side} ${transition ? styles.transition : ''}`}></div>
     </div>
   )
 }

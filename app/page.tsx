@@ -3,18 +3,21 @@
 import { useMemo, useState } from "react";
 import { Authenticate } from "./ui/Authenticate";
 import { Passwords } from "./ui/Passwords";
+import { AddEntry } from "./ui/AddEntry";
 import { Entry } from "./lib/db";
 import styles from "./page.module.css";
-import AddEntry from "./ui/AddEntry";
 
 export default function Page() {
+  const [password, setPassword] = useState('')
   const [loggedIn, setLoggedIn] = useState(false)
+
   const [addActive, setAddActive] = useState(false)
+  const [addTransition, setAddTransition] = useState(false)
 
   const [data, setData] = useState([] as Entry[])
   const [query, setQuery] = useState('')
 
-  const [password, setPassword] = useState('')
+  
 
   const filtered = useMemo(() => {
     return data.filter((password) => (
@@ -24,12 +27,21 @@ export default function Page() {
     ))
   }, [data, query])
 
+  function handleSwitch() {
+    setAddTransition(true)
+
+    setTimeout(() => {
+      setAddActive(true)
+      setAddTransition(false)
+    }, 800)
+  }
+
   return (
     <main>
       { !loggedIn && <Authenticate setLoggedIn={setLoggedIn} setData={setData} setPassword={setPassword} /> }
       { loggedIn && !addActive &&
         <div className={styles.passwordsPage}>
-          <div className={styles.side}>
+          <div className={`${styles.side} ${addTransition ? styles.transition : ''}`}>
             <div>
               <p>P</p>
               <p>a</p>
@@ -45,7 +57,7 @@ export default function Page() {
           <div className={styles.passwords}>
             <div className={styles.controls}>
               <input type='text' placeholder='Search' value={query} onChange={(event) => setQuery(event.target.value)} />
-              <button onClick={() => setAddActive(true)}>Add Entry</button>
+              <button onClick={() => handleSwitch()}>Add Entry</button>
             </div>
             <div>
               <Passwords data={filtered} setData={setData} password={password}/>

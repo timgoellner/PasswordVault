@@ -1,8 +1,8 @@
 import { Entry } from "@/lib/db"
 import { remove } from "@/lib/data"
 import { Dispatch, SetStateAction, useState } from "react"
-import styles from "./Passwords.module.css"
 import { decrypt } from "@/lib/security"
+import styles from "./Passwords.module.css"
 
 interface props {
   data: Entry[]

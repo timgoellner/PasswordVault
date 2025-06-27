@@ -1,0 +1,111 @@
+.addEntryPage {
+  display: grid;
+  height: 100dvh;
+  grid-template-columns: 80dvw 20dvw;
+}
+
+.addEntry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20dvh;
+  gap: 3rem;
+}
+
+.addEntryForm {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  gap: 1.5rem;
+
+  > div {
+    display: flex;
+    align-items: flex-end;
+    gap: 1.5rem;
+  }
+
+  input {
+    min-width: 7rem;
+    width: 12dvw;
+    height: 1.7rem;
+    border: 4px var(--blue) solid;
+    transition: all .3s ease-in;
+  }
+
+  input:focus {
+    box-shadow: 4px 4px var(--blue);
+    border-color: var(--lightblue);
+  }
+}
+
+.passwordField {
+  position: relative;
+  width: fit-content;
+
+  input {
+    padding-right: 1.2rem;
+  }
+
+  button {
+    position: absolute;
+    display: inline-block;
+    bottom: 0;
+    right: .2rem;
+    background-color: transparent;
+    border: none;
+  }
+}
+
+.formActions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 4rem !important;
+
+  button {
+    margin-top: 1rem;
+    padding: .6rem 1.7rem;
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all .1s ease-out;
+  }
+
+  button:hover, button:focus-visible {
+    background-color: var(--darkblue);
+    box-shadow: 4px 4px var(--blue);
+  }
+
+  button:last-child {
+    background-color: white;
+    color: var(--dark);
+    box-shadow: 0 0 0 4px var(--blue) inset;
+  }
+
+  button:last-child:hover, button:last-child:hover {
+    background-color: var(--lightblue);
+  }
+}
+
+.side {
+  background-color: var(--yellow);
+  transform-origin: right;
+  animation: .5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s 1 sideSlideIn;
+}
+
+.transition {
+  animation: .5s cubic-bezier(0.55, 0.085, 0.68, 0.53) 0s 1 sideSlideOut forwards;
+}
+
+@keyframes sideSlideIn {
+  0% { transform: scaleX(5); }
+  100% { transform: scaleX(1); }
+}
+
+@keyframes sideSlideOut {
+  0% { transform: scaleX(1); }
+  100% { transform: scaleX(5); }
+}
