@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { Entry } from '@/lib/db'
 import { validatePassword, validateToken } from '@/lib/authenticate'
 import { get } from '@/lib/data'
+import { BackgroundDesign } from '../ui/BackgroundDesign'
 import styles from './Authenticate.module.css'
 
 interface props {
@@ -38,11 +39,7 @@ export function Authenticate({ setLoggedIn, setData, setPassword }: props) {
   return (
     <div className={styles.authenticatePage}>
       <div className={styles.authentication}>
-        <div className={styles.design}>
-          <div></div>
-          <div><div></div></div>
-          <div><div></div></div>
-        </div>
+        <BackgroundDesign />
         <h1>Password Vault</h1>
         <form className={styles.authenticationForm} action={authenticate}>
           <span>

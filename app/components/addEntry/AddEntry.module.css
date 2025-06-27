@@ -5,11 +5,12 @@
 }
 
 .addEntry {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20dvh;
+  margin-bottom: 10dvh;
   gap: 3rem;
 }
 

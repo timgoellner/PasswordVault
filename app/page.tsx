@@ -1,9 +1,9 @@
 "use client"
 
 import { useMemo, useState } from "react";
-import { Authenticate } from "./ui/Authenticate";
-import { Passwords } from "./ui/Passwords";
-import { AddEntry } from "./ui/AddEntry";
+import { Authenticate } from "./components/authenticate/Authenticate";
+import { Passwords } from "./components/passwords/Passwords";
+import { AddEntry } from "./components/addEntry/AddEntry";
 import { Entry } from "./lib/db";
 import styles from "./page.module.css";
 

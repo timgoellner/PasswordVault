@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { add, get } from "@/lib/data"
-import { Entry, InitialEntry, InitialPassword, Password } from "@/lib/db"
+import { Entry, InitialEntry, InitialPassword } from "@/lib/db"
 import { encrypt } from "@/lib/security"
+import { BackgroundDesign } from "../ui/BackgroundDesign"
 import styles from './AddEntry.module.css'
 
 interface props {
@@ -48,6 +49,7 @@ export function AddEntry({ setData, setAddActive, password }: props) {
   return (
     <div className={styles.addEntryPage}>
       <div className={styles.addEntry}>
+        <BackgroundDesign />
         <h1>Add an Entry</h1>
         <form action={addEntry} className={styles.addEntryForm}>
           <div>
