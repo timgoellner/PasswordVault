@@ -1,8 +1,16 @@
 "use server"
 
-import db, { Entry, InitialEntry, InitialPassword, Password } from '@/lib/db'
+import jwt from 'jsonwebtoken'
 
-export async function get(): Promise<Entry[]> {
+import db from '@/lib/db'
+import { Entry, InitialEntry, InitialPassword } from '@/lib/types'
+import { cookies } from 'next/headers'
+
+export async function getEntries(): Promise<Entry[]> {
+  const cookieStore = await cookies()
+  try { jwt.verify(cookieStore.get('jwt-token')?.value as string, process.env.JWT_SECRET as string) }
+  catch (error) { return [] }
+
   return await db.entry.findMany({
     where: {
       active: true
@@ -19,6 +27,10 @@ export async function get(): Promise<Entry[]> {
 }
 
 export async function remove(id: number): Promise<boolean> {
+  const cookieStore = await cookies()
+  try { jwt.verify(cookieStore.get('jwt-token')?.value as string, process.env.JWT_SECRET as string) }
+  catch (error) { return false }
+
   return await db.entry.update({
     where: {
       id: id
@@ -29,7 +41,11 @@ export async function remove(id: number): Promise<boolean> {
   }) !== null
 }
 
-export async function add(entry: InitialEntry): Promise<Entry> {
+export async function add(entry: InitialEntry): Promise<Entry | null> {
+  const cookieStore = await cookies()
+  try { jwt.verify(cookieStore.get('jwt-token')?.value as string, process.env.JWT_SECRET as string) }
+  catch (error) { return null }
+
   return await db.entry.create({
     data: {
       location1: entry.location1 as string,

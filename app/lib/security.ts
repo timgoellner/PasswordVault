@@ -1,4 +1,6 @@
-import { Password } from "./db"
+"use server"
+
+import { Password } from "@/lib/types"
 
 function arrayBufferToHex(buffer: Uint8Array<ArrayBuffer>) {
     return [...new Uint8Array(buffer)]
@@ -65,11 +67,14 @@ export async function decrypt(data: Password, password: string) {
     const { cipher, iv, salt } = data
     const key = await deriveKey(password, new Uint8Array(hexToArrayBuffer(salt)))
 
-    const decrypted = await crypto.subtle.decrypt(
-        { name: 'AES-GCM', iv: hexToArrayBuffer(iv) },
-        key,
-        hexToArrayBuffer(cipher)
-    )
+    let decrypted
+    try {
+        decrypted = await crypto.subtle.decrypt(
+            { name: 'AES-GCM', iv: hexToArrayBuffer(iv) },
+            key,
+            hexToArrayBuffer(cipher)
+        )
+    } catch(error) { return 'decryption error' }
 
     const decoder = new TextDecoder()
     return decoder.decode(decrypted)

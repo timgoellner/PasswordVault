@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { Authenticate } from "./components/authenticate/Authenticate";
 import { Passwords } from "./components/passwords/Passwords";
 import { AddEntry } from "./components/addEntry/AddEntry";
-import { Entry } from "./lib/db";
+import { Entry } from "./lib/types";
 import styles from "./page.module.css";
 
 export default function Page() {

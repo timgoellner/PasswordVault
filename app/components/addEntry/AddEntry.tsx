@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react"
-import { add, get } from "@/lib/data"
-import { Entry, InitialEntry, InitialPassword } from "@/lib/db"
+import { add, getEntries } from "@/lib/data"
+import { Entry, InitialEntry, InitialPassword } from "@/lib/types"
 import { encrypt } from "@/lib/security"
 import { BackgroundDesign } from "../ui/BackgroundDesign"
 import styles from './AddEntry.module.css'
@@ -31,9 +31,10 @@ export function AddEntry({ setData, setAddActive, password }: props) {
     else if (entry.username === null && entry.email === null) setError('no username or email')
     else if (entry.password === null) setError('no password')
     else {
-      await add(entry as InitialEntry)
+      const created = await add(entry as InitialEntry)
+      if (created === null) return
 
-      setData(await get())
+      setData(await getEntries())
       handleBack()
     }
   }

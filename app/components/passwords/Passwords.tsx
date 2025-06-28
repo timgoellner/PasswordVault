@@ -1,4 +1,4 @@
-import { Entry } from "@/lib/db"
+import { Entry } from "@/lib/types"
 import { remove } from "@/lib/data"
 import { Dispatch, SetStateAction, useState } from "react"
 import { decrypt } from "@/lib/security"

@@ -1,6 +1,7 @@
 const otpauth = require('otpauth')
 const QRCode = require('qrcode')
 const bcrypt = require('bcrypt')
+const crypto_ = require('crypto')
 const fs = require('fs')
 const readline = require('readline')
 
@@ -13,13 +14,13 @@ async function main() {
   const askQuestion = (query: string) => new Promise(resolve => rl.question(query, resolve))
 
   try {
+    const jwtSecret = crypto_.randomBytes(32).toString('hex')
+
     const passwordString = await askQuestion("Enter your authentication password: ")
     rl.close()
-
     const hashedPassword = await bcrypt.hash(passwordString, 10) as string
 
     const secret = new otpauth.Secret({ size: 20 })
-
     const totp = new otpauth.TOTP({
       issuer: "",
       label: "Password Vault",
@@ -27,7 +28,6 @@ async function main() {
       digits: 6,
       secret: secret,
     })
-
     const otpauth_url = totp.toString()
 
     QRCode.toDataURL(otpauth_url, function (err: string, url: string) {
@@ -45,8 +45,9 @@ async function main() {
 </head>
 <body>
   <h1>Paste into .env:</h1>
-  <h2>PASSWORD = '${hashedPassword.replaceAll('$', '\\$')}'</h2>
-  <h2>SECRET = '${secret.base32}'</h2>
+  <h2>JWT_SECRET = '${jwtSecret}'</h2>
+  <h2>PASSWORD_HASH = '${hashedPassword.replaceAll('$', '\\$')}'</h2>
+  <h2>TOTP_SECRET = '${secret.base32}'</h2>
   <br>
   <h1>Scan with Google Authenticator:</h1>
   <img src="${url}" />
