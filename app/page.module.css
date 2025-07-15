@@ -2,6 +2,26 @@
   display: grid;
   grid-template-columns: 16% 84%;
   height: 100dvh;
+
+  > button {
+    position: absolute;
+    right: 4rem;
+    top: 2rem;
+    display: inline-block;
+    height: 2.5rem;
+    padding: .4rem 1.2rem;
+    background-color: white;
+    color: var(--dark);
+    box-shadow: 0 0 0 4px var(--blue) inset;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all .1s ease-out;
+  }
+
+  > button:hover, > button:focus-visible {
+    background-color: var(--lightblue);
+  }
 }
 
 .side {
@@ -37,14 +57,16 @@
 }
 
 .passwords {
+  position: relative;
   display: grid;
   grid-template-rows: 20dvh 60dvh;
   margin-right: 16dvw;
 
   div:last-child {
     margin-left: 5dvw;
-    margin-top: 5dvh;
+    margin-top: 7dvh;
     overflow-y: scroll;
+    overflow-x: hidden;
   }
 }
 
@@ -53,7 +75,6 @@
   gap: 5dvw;
   align-items: flex-end;
   justify-content: center;
-  margin-bottom: 5dvh;
 
   input {
     width: 12dvw;

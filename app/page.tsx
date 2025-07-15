@@ -1,10 +1,11 @@
 "use client"
 
 import { useMemo, useState } from "react";
-import { Authenticate } from "./components/authenticate/Authenticate";
-import { Passwords } from "./components/passwords/Passwords";
-import { AddEntry } from "./components/addEntry/AddEntry";
-import { Entry } from "./lib/types";
+import { Authenticate } from "@/components/authenticate/Authenticate";
+import { Passwords } from "@/components/passwords/Passwords";
+import { AddEntry } from "@/components/addEntry/AddEntry";
+import { Entry } from "@/lib/types";
+import { logout } from "@/lib/authenticate";
 import styles from "./page.module.css";
 
 export default function Page() {
@@ -12,12 +13,11 @@ export default function Page() {
   const [loggedIn, setLoggedIn] = useState(false)
 
   const [addActive, setAddActive] = useState(false)
-  const [addTransition, setAddTransition] = useState(false)
+  const [transition, setTransition] = useState(false)
 
   const [data, setData] = useState([] as Entry[])
   const [query, setQuery] = useState('')
 
-  
 
   const filtered = useMemo(() => {
     return data.filter((password) => (
@@ -28,11 +28,26 @@ export default function Page() {
   }, [data, query])
 
   function handleSwitch() {
-    setAddTransition(true)
+    setTransition(true)
 
     setTimeout(() => {
       setAddActive(true)
-      setAddTransition(false)
+      setTransition(false)
+    }, 800)
+  }
+
+  function handleLogout() {
+    setTransition(true)
+
+    setTimeout(() => {
+      logout()
+
+      setData([])
+      setQuery('')
+      setPassword('')
+
+      setLoggedIn(false)
+      setTransition(false)
     }, 800)
   }
 
@@ -41,7 +56,7 @@ export default function Page() {
       { !loggedIn && <Authenticate setLoggedIn={setLoggedIn} setData={setData} setPassword={setPassword} /> }
       { loggedIn && !addActive &&
         <div className={styles.passwordsPage}>
-          <div className={`${styles.side} ${addTransition ? styles.transition : ''}`}>
+          <div className={`${styles.side} ${transition ? styles.transition : ''}`}>
             <div>
               <p>P</p>
               <p>a</p>
@@ -63,6 +78,7 @@ export default function Page() {
               <Passwords data={filtered} setData={setData} password={password}/>
             </div>
           </div>
+          <button onClick={() => handleLogout()}>Logout</button>
         </div>
       }
       { loggedIn && addActive && <AddEntry setData={setData} setAddActive={setAddActive} password={password} /> }

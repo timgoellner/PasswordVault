@@ -37,3 +37,8 @@ export async function authenticate(password: string, token: string) {
 
   return true
 }
+
+export async function logout() {
+  const cookieStore = await cookies()
+  cookieStore.delete('jwt-token')
+}
