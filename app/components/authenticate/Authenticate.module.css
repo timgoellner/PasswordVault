@@ -1,4 +1,5 @@
 .authenticatePage {
+  position: relative;
   display: grid;
   height: 100dvh;
   grid-template-columns: 80% 20%;
@@ -68,7 +69,7 @@
 .side {
   background-color: var(--yellow);
   transform-origin: right;
-  animation: .8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s 1 sideSlideIn;
+  animation: .8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s 1 sideSlideIn forwards;
 }
 
 .transition {
@@ -83,4 +84,51 @@
 @keyframes sideSlideOut {
   0% { transform: scaleX(1); }
   100% { transform: scaleX(5); }
+}
+
+@media only screen and (max-width: 600px) {
+  .authenticatePage {
+    display: flex;
+  }
+
+  .authentication {
+    width: 100dvw;
+
+    h1 {
+      text-align: center;
+      padding: 0 1rem;
+    }
+  }
+
+  .side {
+    position: absolute;
+    right: 0;
+    height: 100dvh;
+    width: 100dvw;
+    animation: .8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s 1 sideSlideInMobile forwards;
+  }
+
+  .transition {
+    animation: .5s cubic-bezier(0.55, 0.085, 0.68, 0.53) 0s 1 sideSlideOutMobile forwards;
+  }
+}
+
+@keyframes sideSlideIn {
+  0% { transform: scaleX(5); }
+  100% { transform: scaleX(1); }
+}
+
+@keyframes sideSlideOut {
+  0% { transform: scaleX(1); }
+  100% { transform: scaleX(5); }
+}
+
+@keyframes sideSlideInMobile {
+  0% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+
+@keyframes sideSlideOutMobile {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
 }

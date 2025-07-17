@@ -47,3 +47,23 @@
     }
   }
 }
+
+@media only screen and (max-width: 1000px) {
+  .design {
+    display: block;
+
+    > div:nth-child(1) {
+      width: 80%;
+      height: 16%;
+    }
+
+    > div:nth-child(2) div {
+      height: 18%;
+      transform: translate(-10rem, 1rem) rotate(-5deg);
+    }
+
+    > div:nth-child(3) {
+      display: none;
+    }
+  }
+}
