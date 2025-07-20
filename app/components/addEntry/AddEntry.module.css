@@ -101,6 +101,48 @@
   animation: .5s cubic-bezier(0.55, 0.085, 0.68, 0.53) 0s 1 sideSlideOut forwards;
 }
 
+@media only screen and (max-width: 600px) {
+  .addEntryPage {
+    display: flex;
+  }
+
+  .addEntry {
+    width: 100dvw;
+    margin-top: 2rem;
+
+    h1 {
+      text-align: center;
+      padding: 0 1rem;
+    }
+  }
+
+  .addEntryForm {
+    margin-top: 0;
+
+    > div:nth-child(1), > div:nth-child(2) {
+      flex-direction: column;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    input {
+      width: 65dvw;
+    }
+  }
+
+  .side {
+    position: absolute;
+    right: 0;
+    height: 100dvh;
+    width: 100dvw;
+    animation: .8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s 1 sideSlideInMobile forwards;
+  }
+
+  .transition {
+    animation: .5s cubic-bezier(0.55, 0.085, 0.68, 0.53) 0s 1 sideSlideOutMobile forwards;
+  }
+}
+
 @keyframes sideSlideIn {
   0% { transform: scaleX(5); }
   100% { transform: scaleX(1); }
@@ -109,4 +151,14 @@
 @keyframes sideSlideOut {
   0% { transform: scaleX(1); }
   100% { transform: scaleX(5); }
+}
+
+@keyframes sideSlideInMobile {
+  0% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+
+@keyframes sideSlideOutMobile {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
 }
