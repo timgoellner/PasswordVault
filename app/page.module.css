@@ -62,6 +62,10 @@
   grid-template-rows: 20dvh 60dvh;
   margin-right: 16dvw;
 
+  h1 {
+    display: none;
+  }
+
   div:last-child {
     margin-left: 5dvw;
     margin-top: 7dvh;
@@ -77,7 +81,8 @@
   justify-content: center;
 
   input {
-    width: 12dvw;
+    width: 14dvw;
+    min-width: 10rem;
     height: 2.5rem;
     padding: .2rem .8rem;
     border: 4px var(--blue) solid;
@@ -108,14 +113,64 @@
   }
 }
 
+@media only screen and (max-width: 600px) {
+  .passwordsPage {
+    display: flex;
+
+    > button {
+      right: 5dvw;
+      top: 5dvw;
+    }
+  }
+
+  .passwords {
+    grid-template-rows: 8rem 12dvh 60dvh;
+    width: 100dvw;
+    margin-top: 2rem;
+    margin-right: 5dvw;
+    margin-left: 5dvw;
+
+    h1 {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    div:last-child {
+      margin-left: 0;
+    }
+  }
+
+  .controls {
+    input {
+      width: 100%;
+    }
+
+    button {
+      white-space: nowrap;
+    }
+  }
+
+  .side {
+    position: absolute;
+    right: 0;
+    height: 100dvh;
+    width: 100dvw;
+    animation: .8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s 1 sideSlideInMobile forwards;
+
+    div {
+      display: none;
+    }
+  }
+
+  .transition {
+    animation: .5s cubic-bezier(0.55, 0.085, 0.68, 0.53) 0s 1 sideSlideOutMobile forwards;
+  }
+}
+
 @keyframes sideSlideIn {
   0% { transform: scaleX(6.25); }
   100% { transform: scaleX(1); }
-}
-
-@keyframes textSlideIn {
-  0% { transform: translateX(-15dvw) rotate(-90deg); }
-  100% { transform: translateX(0) rotate(-90deg); }
 }
 
 @keyframes sideSlideOut {
@@ -123,7 +178,22 @@
   100% { transform: scaleX(6.25); }
 }
 
+@keyframes textSlideIn {
+  0% { transform: translateX(-15dvw) rotate(-90deg); }
+  100% { transform: translateX(0) rotate(-90deg); }
+}
+
 @keyframes textSlideOut {
   0% { transform: translateX(0) rotate(-90deg); }
   100% { transform: translateX(-15dvw) rotate(-90deg); }
+}
+
+@keyframes sideSlideInMobile {
+  0% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+
+@keyframes sideSlideOutMobile {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
 }

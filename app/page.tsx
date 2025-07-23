@@ -70,6 +70,7 @@ export default function Page() {
             </div>
           </div>
           <div className={styles.passwords}>
+            <h1>Passwords</h1>
             <div className={styles.controls}>
               <input type='text' placeholder='Search' value={query} onChange={(event) => setQuery(event.target.value)} />
               <button onClick={() => handleSwitch()}>Add Entry</button>
