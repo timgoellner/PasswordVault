@@ -22,7 +22,7 @@ export function Authenticate({ setLoggedIn, setData, setPassword }: props) {
 
     const authenticated = await authenticate(password as string, token as string)
     if (authenticated === false) {
-      setIsError(true);
+      setIsError(true)
       setTimeout(() => setIsError(false), 500)
 
       return

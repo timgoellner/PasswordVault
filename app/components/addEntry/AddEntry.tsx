@@ -11,11 +11,18 @@ interface props {
   password: string
 }
 
+const enum ErrorFlags {
+  NONE = 0,
+  LOCATION = 1 << 0,
+  IDENTIFIER = 1 << 1,
+  PASSWORD = 1 << 2
+}
+
 export function AddEntry({ setData, setAddActive, password }: props) {
   const [transition, setTransition] = useState(false)
 
   const [showPassword, setShowPassword] = useState(false)
-  const [error, setError] = useState('')
+  const [errorState, setErrorState] = useState(0)
 
   async function addEntry(formData: FormData) {
     let entry: Record<string, InitialPassword | string | null> = {}
@@ -27,16 +34,26 @@ export function AddEntry({ setData, setAddActive, password }: props) {
       else entry[key] = (value === '') ? null : value
     }
 
-    if (entry.location1 === null || (entry.location2 === null && entry.location3 !== null)) setError('invalid location')
-    else if (entry.username === null && entry.email === null) setError('no username or email')
-    else if (entry.password === null) setError('no password')
-    else {
-      const created = await add(entry as InitialEntry)
-      if (created === null) return
+    
 
-      setData(await getEntries())
-      handleBack()
+    const locationError = entry.location1 === null || (entry.location2 === null && entry.location3 !== null)
+    const identifierError = entry.username === null && entry.email === null
+    const passwordError = entry.password === null
+
+    if (locationError || identifierError || passwordError) {
+      if (locationError) { setErrorState(previous => previous | ErrorFlags.LOCATION) }
+      if (identifierError) { setErrorState(previous => previous | ErrorFlags.IDENTIFIER) }
+      if (passwordError) { setErrorState(previous => previous | ErrorFlags.PASSWORD) }
+
+      setTimeout(() => setErrorState(0), 500)
+      return
     }
+
+    const created = await add(entry as InitialEntry)
+    if (created === null) return
+
+    setData(await getEntries())
+    handleBack()
   }
 
   function handleBack() {
@@ -56,23 +73,23 @@ export function AddEntry({ setData, setAddActive, password }: props) {
           <div>
             <span>
               <p>Location</p>
-              <input name='location1' />
+              <input className={errorState & ErrorFlags.LOCATION ? styles.error : ''} name='location1' />
             </span>
-            <input name='location2' />
-            <input name='location3' />
+            <input className={errorState & ErrorFlags.LOCATION  ? styles.error : ''} name='location2' />
+            <input className={errorState & ErrorFlags.LOCATION  ? styles.error : ''} name='location3' />
           </div>
           <div>
             <span>
               <p>Username</p>
-              <input name='username' />
+              <input className={errorState & ErrorFlags.IDENTIFIER  ? styles.error : ''} name='username' />
             </span>
             <span>
               <p>Email</p>
-              <input name='email' />
+              <input className={errorState & ErrorFlags.IDENTIFIER  ? styles.error : ''} name='email' />
             </span>
             <span className={styles.passwordField}>
               <p>Password</p>
-              <input type={showPassword ? 'text' : 'password'} name='password' />
+              <input type={showPassword ? 'text' : 'password'} className={errorState & ErrorFlags.PASSWORD  ? styles.error : ''} name='password' />
               <button type='button' onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? (
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -88,10 +105,10 @@ export function AddEntry({ setData, setAddActive, password }: props) {
             </span>
           </div>
           <div className={styles.formActions}>
-            <button type='submit'>Add Entry</button>
+            <button type='submit' className={errorState !== 0 ? styles.error : ''}>Add Entry</button>
             <button type='button' onClick={() => handleBack()}>Back</button>
           </div>
-          <p>{error}</p>
+          <p></p>
         </form>
       </div>
       <div className={`${styles.side} ${transition ? styles.transition : ''}`}></div>

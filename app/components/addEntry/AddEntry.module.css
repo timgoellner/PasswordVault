@@ -27,7 +27,7 @@
   }
 
   input {
-    min-width: 7rem;
+    min-width: 8.5rem;
     width: 12dvw;
     height: 1.7rem;
     border: 4px var(--blue) solid;
@@ -89,6 +89,24 @@
   button:last-child:hover, button:last-child:hover {
     background-color: var(--lightblue);
   }
+}
+
+input.error {
+  border-color: var(--orangered) !important;
+}
+
+input.error:focus {
+  border-color: var(--red) !important;
+  box-shadow: 4px 4px var(--orangered) !important;
+}
+
+button.error {
+  background-color: var(--orangered) !important;
+}
+
+button.error:hover, button.error:focus-visible {
+  background-color: var(--red) !important;
+  box-shadow: 4px 4px var(--orangered) !important;
 }
 
 .side {
