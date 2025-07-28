@@ -1,5 +1,3 @@
-"use server"
-
 import { Password } from "@/lib/types"
 
 function arrayBufferToHex(buffer: Uint8Array<ArrayBuffer>) {

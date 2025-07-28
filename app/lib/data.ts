@@ -46,6 +46,8 @@ export async function add(entry: InitialEntry): Promise<Entry | null> {
   try { jwt.verify(cookieStore.get('jwt-token')?.value as string, process.env.JWT_SECRET as string) }
   catch (error) { return null }
 
+  console.log(entry)
+
   return await db.entry.create({
     data: {
       location1: entry.location1 as string,

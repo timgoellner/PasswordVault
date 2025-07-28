@@ -4,7 +4,6 @@ import { getEntries } from '@/lib/data'
 import { authenticate } from '@/lib/authenticate'
 import { BackgroundDesign } from '../ui/BackgroundDesign'
 import styles from './Authenticate.module.css'
-import { cookies } from 'next/headers'
 
 interface props {
   setLoggedIn: Dispatch<SetStateAction<boolean>>

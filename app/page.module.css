@@ -66,7 +66,7 @@
     display: none;
   }
 
-  div:last-child {
+  > div:last-child {
     margin-left: 5dvw;
     margin-top: 7dvh;
     overflow-y: scroll;
@@ -113,7 +113,7 @@
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
   .passwordsPage {
     display: flex;
 
