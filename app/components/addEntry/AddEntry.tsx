@@ -8,7 +8,7 @@ import styles from './AddEntry.module.css'
 interface props {
   setData: Dispatch<SetStateAction<Entry[]>>
   setAddActive: Dispatch<SetStateAction<boolean>>
-  password: string
+  key_: string
 }
 
 const enum ErrorFlags {
@@ -18,7 +18,7 @@ const enum ErrorFlags {
   PASSWORD = 1 << 2
 }
 
-export function AddEntry({ setData, setAddActive, password }: props) {
+export function AddEntry({ setData, setAddActive, key_ }: props) {
   const [transition, setTransition] = useState(false)
 
   const [showPassword, setShowPassword] = useState(false)
@@ -27,14 +27,12 @@ export function AddEntry({ setData, setAddActive, password }: props) {
   async function addEntry(formData: FormData) {
     let entry: Record<string, InitialPassword | string | null> = {}
 
-    for (const key of formData.keys()) {
-      const value = formData.get(key) as string
+    for (const keyValue of formData.keys()) {
+      const value = formData.get(keyValue) as string
 
-      if (key === 'password') entry['password'] = (value === '') ? null : await encrypt(value, password)
-      else entry[key] = (value === '') ? null : value
+      if (keyValue === 'password') entry['password'] = (value === '') ? null : await encrypt(value, key_)
+      else entry[keyValue] = (value === '') ? null : value
     }
-
-    
 
     const locationError = entry.location1 === null || (entry.location2 === null && entry.location3 !== null)
     const identifierError = entry.username === null && entry.email === null

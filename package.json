@@ -2,12 +2,13 @@
   "name": "password-vault",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "setup": "npx ts-node setup.ts"
+    "setup": "node --loader ts-node/esm setup.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.9.0",
@@ -27,12 +28,14 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",
     "@types/pg": "^8.15.4",
+    "@types/qrcode": "^1.5.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
     "prisma": "^6.9.0",
+    "ts-node": "^10.9.2",
     "tsx": "^4.20.1",
-    "typescript": "^5"
+    "typescript": "^5.8.3"
   }
 }

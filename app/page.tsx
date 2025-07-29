@@ -9,7 +9,7 @@ import { logout } from "@/lib/authenticate";
 import styles from "./page.module.css";
 
 export default function Page() {
-  const [password, setPassword] = useState('')
+  const [key, setKey] = useState('')
   const [loggedIn, setLoggedIn] = useState(false)
 
   const [addActive, setAddActive] = useState(false)
@@ -44,7 +44,7 @@ export default function Page() {
 
       setData([])
       setQuery('')
-      setPassword('')
+      setKey('')
 
       setLoggedIn(false)
       setTransition(false)
@@ -53,7 +53,7 @@ export default function Page() {
 
   return (
     <main>
-      { !loggedIn && <Authenticate setLoggedIn={setLoggedIn} setData={setData} setPassword={setPassword} /> }
+      { !loggedIn && <Authenticate setLoggedIn={setLoggedIn} setData={setData} setKey={setKey} /> }
       { loggedIn && !addActive &&
         <div className={styles.passwordsPage}>
           <div className={`${styles.side} ${transition ? styles.transition : ''}`}>
@@ -76,13 +76,13 @@ export default function Page() {
               <button onClick={() => handleSwitch()}>Add Entry</button>
             </div>
             <div>
-              <Passwords data={filtered} setData={setData} password={password}/>
+              <Passwords data={filtered} setData={setData} key_={key}/>
             </div>
           </div>
           <button onClick={() => handleLogout()}>Logout</button>
         </div>
       }
-      { loggedIn && addActive && <AddEntry setData={setData} setAddActive={setAddActive} password={password} /> }
+      { loggedIn && addActive && <AddEntry setData={setData} setAddActive={setAddActive} key_={key} /> }
     </main>
   )
 }

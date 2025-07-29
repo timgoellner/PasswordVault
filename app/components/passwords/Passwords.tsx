@@ -8,10 +8,10 @@ import React from "react"
 interface props {
   data: Entry[]
   setData: Dispatch<SetStateAction<Entry[]>>
-  password: string
+  key_: string
 }
 
-export function Passwords({ data, setData, password }: props) {
+export function Passwords({ data, setData, key_ }: props) {
   const [decrypted, setDecrypted] = useState<Record<number, string>>(data.reduce((previous, entry) => {
     previous[entry.id] = '-'.repeat(Math.floor(Math.random() * 10) + 10)
     return previous
@@ -35,7 +35,7 @@ export function Passwords({ data, setData, password }: props) {
 
   async function handleReveal(entry: Entry) {
     if (decrypted[entry.id].match('^-+$')) {
-      const decrypted = await decrypt(entry.password, password)
+      const decrypted = await decrypt(entry.password, key_)
 
       setDecrypted(previous => {
         return {

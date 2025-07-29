@@ -8,10 +8,10 @@ import styles from './Authenticate.module.css'
 interface props {
   setLoggedIn: Dispatch<SetStateAction<boolean>>
   setData: Dispatch<SetStateAction<Entry[]>>
-  setPassword: Dispatch<SetStateAction<string>>
+  setKey: Dispatch<SetStateAction<string>>
 }
 
-export function Authenticate({ setLoggedIn, setData, setPassword }: props) {
+export function Authenticate({ setLoggedIn, setData, setKey }: props) {
   const [transition, setTransition] = useState(false)
   const [isError, setIsError] = useState(false)
 
@@ -19,8 +19,8 @@ export function Authenticate({ setLoggedIn, setData, setPassword }: props) {
     const password = formData.get('password')
     const token = formData.get('token')
 
-    const authenticated = await authenticate(password as string, token as string)
-    if (authenticated === false) {
+    const key = await authenticate(password as string, token as string)
+    if (key === null) {
       setIsError(true)
       setTimeout(() => setIsError(false), 500)
 
@@ -28,9 +28,8 @@ export function Authenticate({ setLoggedIn, setData, setPassword }: props) {
     }
     
     setTransition(true)
-
-    // Only for testing
-    setPassword("12345678" as string)
+    
+    setKey(key)
     setData(await getEntries())
 
     setTimeout(() => { setLoggedIn(true) }, 600)
