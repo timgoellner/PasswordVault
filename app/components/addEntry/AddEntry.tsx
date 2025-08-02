@@ -25,7 +25,7 @@ export function AddEntry({ setData, setAddActive, key_ }: props) {
   const [errorState, setErrorState] = useState(0)
 
   async function addEntry(formData: FormData) {
-    let entry: Record<string, InitialPassword | string | null> = {}
+    const entry: Record<string, InitialPassword | string | null> = {}
 
     for (const keyValue of formData.keys()) {
       const value = formData.get(keyValue) as string

@@ -12,7 +12,7 @@ export async function validatePassword(password: string) {
 }
 
 export async function validateToken(token: string) {
-  let totp = new otpauth.TOTP({
+  const totp = new otpauth.TOTP({
     issuer: "",
     label: "Password Vault",
     algorithm: "SHA1",

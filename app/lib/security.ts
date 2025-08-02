@@ -72,7 +72,7 @@ export async function decrypt(data: Password, password: string) {
             key,
             hexToArrayBuffer(cipher)
         )
-    } catch(error) { return 'decryption error' }
+    } catch(error) { return `decryption error: ${error}` }
 
     const decoder = new TextDecoder()
     return decoder.decode(decrypted)

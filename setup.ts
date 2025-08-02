@@ -57,6 +57,8 @@ async function main() {
   <h2>KEY_IV = '${keyData['iv']}'</h2>
   <h2>KEY_SALT = '${keyData['salt']}'</h2>
   <br>
+  <h2>DATABASE_URL = ''</h2>
+  <br>
   <h1>Scan with Google Authenticator:</h1>
   <img src="${url}" />
 </body>
@@ -64,7 +66,7 @@ async function main() {
 `
 
       fs.writeFileSync('setup.html', fileContent, 'utf8')
-      console.log("2FA QR-Code, Secret, and Hashed Password saved in setup.html")
+      console.log("2fa qr-code and other credentials saved in setup.html")
     })
 
   } catch (error) {

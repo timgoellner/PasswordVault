@@ -9,7 +9,7 @@ import { cookies } from 'next/headers'
 export async function getEntries(): Promise<Entry[]> {
   const cookieStore = await cookies()
   try { jwt.verify(cookieStore.get('jwt-token')?.value as string, process.env.JWT_SECRET as string) }
-  catch (error) { return [] }
+  catch { return [] }
 
   return await db.entry.findMany({
     where: {
@@ -29,7 +29,7 @@ export async function getEntries(): Promise<Entry[]> {
 export async function remove(id: number): Promise<boolean> {
   const cookieStore = await cookies()
   try { jwt.verify(cookieStore.get('jwt-token')?.value as string, process.env.JWT_SECRET as string) }
-  catch (error) { return false }
+  catch { return false }
 
   return await db.entry.update({
     where: {
@@ -44,7 +44,7 @@ export async function remove(id: number): Promise<boolean> {
 export async function add(entry: InitialEntry): Promise<Entry | null> {
   const cookieStore = await cookies()
   try { jwt.verify(cookieStore.get('jwt-token')?.value as string, process.env.JWT_SECRET as string) }
-  catch (error) { return null }
+  catch { return null }
 
   return await db.entry.create({
     data: {
