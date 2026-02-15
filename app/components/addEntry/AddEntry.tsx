@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { add, getEntries } from "@/lib/data"
-import { Entry, InitialEntry, InitialPassword } from "@/lib/types"
+import { Entry, InitialEntry, Password } from "@/lib/types"
 import { encrypt } from "@/lib/security"
 import { BackgroundDesign } from "../ui/BackgroundDesign"
 import styles from './AddEntry.module.css'
@@ -25,7 +25,7 @@ export function AddEntry({ setData, setAddActive, key_ }: props) {
   const [errorState, setErrorState] = useState(0)
 
   async function addEntry(formData: FormData) {
-    const entry: Record<string, InitialPassword | string | null> = {}
+    const entry: Record<string, Password | string | null> = {}
 
     for (const keyValue of formData.keys()) {
       const value = formData.get(keyValue) as string
@@ -48,7 +48,7 @@ export function AddEntry({ setData, setAddActive, key_ }: props) {
     }
 
     const created = await add(entry as InitialEntry)
-    if (created === null) return
+    if (created === false) return
 
     setData(await getEntries())
     handleBack()

@@ -1,0 +1,1 @@
+run: docker run -d --name vault-app --network=vault -p 3001:3000 password-vault

@@ -1,12 +1,35 @@
-import { PrismaClient } from '../generated/prisma'
-import { withAccelerate } from '@prisma/extension-accelerate'
+import { Client } from 'pg'
 
-const globalForPrisma = global as unknown as { 
-  prisma: PrismaClient
-}
+const db = new Client({
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  database: process.env.DB_DATABASE
+})
 
-const db = globalForPrisma.prisma || new PrismaClient().$extends(withAccelerate())
+await db.connect()
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db
+const query = `
+BEGIN;
+CREATE TABLE IF NOT EXISTS password (
+  id          serial PRIMARY KEY,
+  cipher      varchar(200) NOT NULL,
+  iv          varchar(100) NOT NULL,
+  salt        varchar(100) NOT NULL
+);
+CREATE TABLE IF NOT EXISTS entry (
+  id          serial PRIMARY KEY,
+  timestamp   timestamp DEFAULT CURRENT_TIMESTAMP,
+  active      boolean DEFAULT TRUE,
+  location1   varchar(30) NOT NULL,
+  location2   varchar(30),
+  location3   varchar(30),
+  username    varchar(50),
+  email       varchar(50),
+  passwordid  integer NOT NULL REFERENCES Password(id)
+);
+COMMIT;`
+db.query(query)
 
 export default db

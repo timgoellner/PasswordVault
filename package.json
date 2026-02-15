@@ -11,13 +11,12 @@
     "setup": "node --loader ts-node/esm setup.ts"
   },
   "dependencies": {
-    "@prisma/client": "^6.9.0",
-    "@prisma/extension-accelerate": "^2.0.1",
     "bcrypt": "^6.0.0",
     "dotenv": "^16.5.0",
     "jsonwebtoken": "^9.0.2",
     "next": "^15.3.4",
     "otpauth": "^9.4.0",
+    "pg": "^8.18.0",
     "qrcode": "^1.5.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
@@ -27,13 +26,12 @@
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",
-    "@types/pg": "^8.15.4",
+    "@types/pg": "^8.16.0",
     "@types/qrcode": "^1.5.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
-    "prisma": "^6.9.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.1",
     "typescript": "^5.8.3"

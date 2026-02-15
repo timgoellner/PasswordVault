@@ -1,26 +1,45 @@
-export type InitialEntry = Omit<Entry, 'id' | 'createdAt' | 'active' | 'password' | 'passwordId'> & {
-  password: InitialPassword
+export type DatabaseRow = Omit<Entry, 'password'> & Password & {
+  passwordid: number
 }
+
+export type InitialEntry = Omit<Entry, 'id' | 'timestamp' | 'active'>
 
 export type Entry = {
   id: number,
-  createdAt: Date,
+  timestamp: Date,
   active: boolean,
   location1: string,
   location2: string | null,
   location3: string | null,
   username: string | null,
   email: string | null,
-  password: Password,
-  passwordId: number,
+  password: Password
 }
 
-export type InitialPassword = Omit<Password, 'id' | 'entry'>
-
 export type Password = {
-  id: number,
   cipher: string,
   iv: string,
-  salt: string,
-  entry?: Entry | null
+  salt: string
+}
+
+export function rowToEntry(data: DatabaseRow): Entry {
+  const password: Password = {
+    cipher: data.cipher,
+    iv: data.iv,
+    salt: data.salt
+  }
+
+  const entry: Entry = {
+    id: data.id,
+    timestamp: data.timestamp,
+    active: data.active,
+    location1: data.location1,
+    location2: data.location2,
+    location3: data.location3,
+    username: data.username,
+    email: data.email,
+    password: password
+  }
+
+  return entry
 }
