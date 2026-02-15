@@ -57,8 +57,6 @@ async function main() {
   <h2>KEY_IV = '${keyData['iv']}'</h2>
   <h2>KEY_SALT = '${keyData['salt']}'</h2>
   <br>
-  <h2>DATABASE_URL = ''</h2>
-  <br>
   <h1>Scan with Google Authenticator:</h1>
   <img src="${url}" />
 </body>
